@@ -20,9 +20,9 @@ The system uses retrieval-augmented generation (RAG) architecture with the follo
 ## Setup
 
 1. Clone this repository
-2. Install dependencies: pip install -r requirements.txt --break-system-packages
-3. Set OpenAI API key: export OPENAI_API_KEY='your-key-here'
-4. Load and process documentation: python load_docs.py
-5. Query the documentation: python query.py "your question here"
+2. Install dependencies: `pip install -r requirements.txt --break-system-packages`
+3. Set OpenAI API key: `export OPENAI_API_KEY='your-key-here'`
+4. Load and process documentation: `python load_docs.py`
+5. Query the documentation: `python query.py "your question here"``
 
-The load_docs.py script clones the Chia documentation repository and processes approximately 200 markdown files into the vector database. This takes 3-5 minutes on first run. Subsequent queries use the cached database.
+The `load_docs.py` script clones the Chia documentation repository and processes approximately 200 markdown files into the vector database. This takes 3-5 minutes on first run. Subsequent queries use the cached database.
