@@ -1,0 +1,6 @@
+langchain[openai]
+langchain-text-splitters
+langchain-community
+bs4
+langchain-openai
+chromadb
