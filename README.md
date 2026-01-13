@@ -35,3 +35,80 @@ python query.py "What hardware do I need for farming?"
 ```
 
 The `load_docs.py` script clones the Chia documentation repository and processes approximately 200 markdown files into the vector database. This takes 3-5 minutes on first run. Subsequent queries use the cached database.
+
+## Example Output
+
+### Command
+```bash
+
+➜  chia-docs-semantic-search git:(main) ✗ python query.py "What hardware do I need?"
+```
+
+### Output
+```bash
+Query: What hardware do I need?
+
+Loading vector store...
+/Users/roy/Projects/chia-docs-semantic-search/query.py:28: LangChainDeprecationWarning: The class `Chroma` was deprecated in LangChain 0.2.9 and will be removed in 1.0. An updated version of the class exists in the `langchain-chroma package and should be used instead. To use it run `pip install -U `langchain-chroma` and import as `from `langchain_chroma import Chroma``.
+  vectorstore = Chroma(
+Retrieving relevant documentation...
+
+Generating answer...
+
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+ANSWER
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+Answer (based on the docs):
+
+- The hardware you need depends on whether you’re plotting or farming.
+
+Plotting hardware (to create plots)
+- Main components: temporary storage and a processor (CPU or GPU).
+- Temporary storage tradeoffs:
+  - RAM: fastest and doesn’t wear out from plotting, but requires a high-end workstation; tends to be economical mainly for large farms (> ~1 PiB).
+  - HDD: inexpensive and durable, but significantly slower.
+  - SSD: fast and practical; SSDs can wear out over time, so high-endurance enterprise NVMe is recommended.
+- In short: more compute and faster temporary storage speed mean faster plotting. RAM, SSDs, and/or GPUs/CPUs are the key choices. Most setups use a combination that fits budget and plot rate needs.
+
+Farming hardware (to store and farm plots)
+- You need a 64-bit CPU (and a 64-bit OS) since farming is done on a 64-bit platform.
+- Windows, Linux, and macOS are supported.
+- Minimum for farming (from the farming guide): a Raspberry Pi 4 with 4 GB RAM for a CLI farm, or 8 GB RAM for a GUI farm.
+- Most computers made after 2010 can be used for farming.
+- Plotting is resource-intensive, and while a Pi can be used for plotting (it will be slow), it’s not ideal long-term.
+
+Additional note
+- The page mentions a new proof format introduced in 2024, which will have slightly different hardware requirements for plotting and farming; the remainder of the page describes the original format.
+
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+SOURCES
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+
+[Source 1]
+File: /Users/roy/Projects/chia-docs/docs/reference-client/plotting/plotting-hardware.md
+Content preview: If you do decide to buy hardware, this page will help you to decide what might work best for your farm.
+
+When looking for a plotting machine, the main components to consider are the temporary storage ...
+--------------------------------------------------------------------------------
+
+[Source 2]
+File: /Users/roy/Projects/chia-docs/docs/reference-client/getting-started/farming-guide.md
+Content preview: :::
+
+Ready? Let's get started!
+
+Obtain hardware
+
+You may already have everything you need, but let's make sure. (All you need for this tutorial is the minimum requirements. We'll cover more optimized ...
+--------------------------------------------------------------------------------
+
+[Source 3]
+File: /Users/roy/Projects/chia-docs/docs/reference-client/plotting/plotting-hardware.md
+Content preview: sidebar_label: Hardware title: Plotting Hardware slug: /reference-client/plotting/plotting-hardware
+
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+New proof format
+
+In 2024, w...
+```
