@@ -19,10 +19,18 @@ The system uses retrieval-augmented generation (RAG) architecture with the follo
 
 ## Setup
 
+Use Python 3.8 to 3.13. This does not work on Python 3.14 and above. 
+
 1. Clone this repository
 2. Install dependencies: `pip install -r requirements.txt --break-system-packages`
 3. Set OpenAI API key: `export OPENAI_API_KEY='your-key-here'`
 4. Load and process documentation: `python load_docs.py`
 5. Query the documentation: `python query.py "your question here"`
+
+```bash
+source venv/bin/activate
+export OPENAI_API_KEY='your-key-here'
+python query.py "What hardware do I need for farming?"
+```
 
 The `load_docs.py` script clones the Chia documentation repository and processes approximately 200 markdown files into the vector database. This takes 3-5 minutes on first run. Subsequent queries use the cached database.
