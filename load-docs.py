@@ -1,6 +1,4 @@
 import os
-import subprocess
-import shutil
 from pathlib import Path
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
@@ -16,33 +14,40 @@ if not api_key:
 print("Initializing embeddings model...")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
-print("Cloning Chia documentation from GitHub...")
-repo_path = Path("./temp_chia_docs")
+# Get directory path from user
+docs_path = input("Enter the path to the chia-docs/docs directory: ").strip()
+docs_path = Path(docs_path).expanduser()
 
-# Remove if exists
-if repo_path.exists():
-	shutil.rmtree(repo_path)
+if not docs_path.exists():
+	raise ValueError(f"Directory does not exist: {docs_path}")
 
-# Clone repo
-subprocess.run([
-	"git", "clone", 
-	"--depth", "1",
-	"https://github.com/chia-network/chia-docs.git",
-	str(repo_path)
-], check=True)
+if not docs_path.is_dir():
+	raise ValueError(f"Path is not a directory: {docs_path}")
 
-print("Loading documentation files...")
-loader = DirectoryLoader(
-	str(repo_path / "docs"),
+print(f"Loading documentation from: {docs_path}")
+print("Loading documentation files (.md and .mdx only)...")
+
+# Load .md files
+loader_md = DirectoryLoader(
+	str(docs_path),
 	glob="**/*.md",
 	loader_cls=UnstructuredMarkdownLoader
 )
-docs = loader.load()
-print(f"Loaded {len(docs)} documents")
+docs_md = loader_md.load()
+print(f"Loaded {len(docs_md)} .md files")
 
-# Clean up cloned repo
-print("Cleaning up temporary files...")
-shutil.rmtree(repo_path)
+# Load .mdx files
+loader_mdx = DirectoryLoader(
+	str(docs_path),
+	glob="**/*.mdx",
+	loader_cls=UnstructuredMarkdownLoader
+)
+docs_mdx = loader_mdx.load()
+print(f"Loaded {len(docs_mdx)} .mdx files")
+
+# Combine both
+docs = docs_md + docs_mdx
+print(f"Total documents loaded: {len(docs)}")
 
 print("Splitting documents into chunks...")
 text_splitter = RecursiveCharacterTextSplitter(
@@ -62,6 +67,8 @@ vectorstore = Chroma.from_documents(
 )
 
 print(f"\nIndexing complete!")
+print(f"Total .md files: {len(docs_md)}")
+print(f"Total .mdx files: {len(docs_mdx)}")
 print(f"Total documents processed: {len(docs)}")
 print(f"Total chunks created: {len(all_splits)}")
 print(f"Vector store saved to: ./chroma_db")

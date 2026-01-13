@@ -11,7 +11,7 @@ The system uses retrieval-augmented generation (RAG) architecture with the follo
 
 - Stack: Python, LangChain, ChromaDB, OpenAI embeddings API
 
-- Document Processing: DirectoryLoader reads markdown files from the Chia docs repository. TextSplitter chunks documents into 1000-character segments with 200-character overlap to maintain context across boundaries.
+- Document Processing: DirectoryLoader reads markdown files from a locally cloned Chia docs repository. TextSplitter chunks documents into 1000-character segments with 200-character overlap to maintain context across boundaries.
 
 - Vector Storage: ChromaDB stores document embeddings locally. Each chunk gets converted to a 1536-dimension vector using OpenAI's text-embedding-3-small model.
 
@@ -23,9 +23,10 @@ Use Python 3.8 to 3.13. This does not work on Python 3.14 and above.
 
 1. Clone this repository
 2. Install dependencies: `pip install -r requirements.txt --break-system-packages`
-3. Set OpenAI API key: `export OPENAI_API_KEY='your-key-here'`
-4. Load and process documentation: `python load_docs.py`
-5. Query the documentation: `python query.py "your question here"`
+3. Clone the Chia Docs repository: `git clone https://github.com/Chia-Network/chia-docs.git`
+4. Set OpenAI API key: `export OPENAI_API_KEY='your-key-here'`
+5. Load and process documentation: `python load_docs.py`
+6. Query the documentation: `python query.py "your question here"`
 
 ```bash
 source venv/bin/activate
