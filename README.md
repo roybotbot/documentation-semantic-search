@@ -1,9 +1,10 @@
 # Chia Docs Semantic Search Proof of Concept
 
-Natural language search system for technical documentation using retrieval-augmented generation. Built to demonstrate semantic search implementation on documentation I maintained as Director of Ecosystem Operations at Chia Network.
+Natural language search system for technical documentation using retrieval-augmented generation. Built to demonstrate semantic search implementation on documentation I previously maintained as Director of Ecosystem Operations at Chia Network.
 
 ## Technical Overview
 This project implements semantic search over the Chia Network developer documentation repository using vector embeddings and similarity retrieval. The system converts markdown documentation into searchable embeddings, enabling natural language queries that return conceptually relevant results rather than requiring exact keyword matches.
+
 The implementation addresses a common problem in technical documentation: users know what they want to accomplish but don't know the specific terminology used in the docs. Semantic search bridges this gap by understanding intent rather than matching strings.
 
 ## Architecture
