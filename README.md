@@ -41,11 +41,11 @@ The `load_docs.py` script clones the Chia documentation repository and processes
 ### Command
 ```bash
 
-➜  chia-docs-semantic-search git:(main) ✗ python query.py "What hardware do I need?"
+➜  chia-docs-semantic-search git:(main) python query.py "What hardware do I need?"
 ```
 
 ### Output
-```bash
+```
 Query: What hardware do I need?
 
 Loading vector store...
