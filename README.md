@@ -1,115 +1,112 @@
-# Chia Docs Semantic Search Proof of Concept
+# Documentation Semantic Search
 
-Natural language search system for technical documentation using retrieval-augmented generation. Built to demonstrate semantic search implementation on documentation I previously maintained as Director of Ecosystem Operations at Chia Network.
+Turn any documentation repository into a natural language search system using retrieval-augmented generation (RAG).
 
-## Technical Overview
-This project implements semantic search over the Chia Network developer documentation repository using vector embeddings and similarity retrieval. The system converts markdown documentation into searchable embeddings, enabling natural language queries that return conceptually relevant results rather than requiring exact keyword matches.
+## Why
 
-The implementation addresses a common problem in technical documentation: users know what they want to accomplish but don't know the specific terminology used in the docs. Semantic search bridges this gap by understanding intent rather than matching strings.
+Keyword search fails when users know what they want but not the terminology the docs use. This system converts documentation into vector embeddings and retrieves results by meaning, not string matching.
 
-## Architecture
-The system uses retrieval-augmented generation (RAG) architecture with the following components:
+Built from experience maintaining ~200 pages of developer documentation at Chia Network, where users regularly struggled to find answers that existed in the docs.
 
-- Stack: Python, LangChain, ChromaDB, OpenAI embeddings API
+## How It Works
 
-- Document Processing: DirectoryLoader reads markdown files from a locally cloned Chia docs repository. TextSplitter chunks documents into 1000-character segments with 200-character overlap to maintain context across boundaries.
+```
+Markdown files
+    │
+    ▼
+┌──────────┐    ┌──────────────┐    ┌─────────────┐
+│  Loader  │───▶│   Chunker    │───▶│  Embeddings │
+│ (md/mdx) │    │ (1000 char)  │    │  (OpenAI)   │
+└──────────┘    └──────────────┘    └──────┬──────┘
+                                           │
+                                           ▼
+                                    ┌─────────────┐
+                                    │  ChromaDB   │
+                                    │ (local)     │
+                                    └──────┬──────┘
+                                           │
+User query ──▶ Embed ──▶ Similarity Search─┘
+                                           │
+                                           ▼
+                                    ┌─────────────┐
+                                    │   LLM       │──▶ Answer + Sources
+                                    └─────────────┘
+```
 
-- Vector Storage: ChromaDB stores document embeddings locally. Each chunk gets converted to a 1536-dimension vector using OpenAI's text-embedding-3-small model.
+## Design Decisions
 
-- Retrieval: User queries convert to embeddings using the same model. ChromaDB performs cosine similarity search to return the most relevant document chunks.
+**Chunk size: 1000 characters, 200 overlap.** Small enough for precise retrieval, large enough to preserve context. The overlap prevents losing information at chunk boundaries — a sentence split across two chunks still appears in full in at least one.
+
+**Embedding model: `text-embedding-3-small`.** OpenAI's cheapest embedding model. For documentation search, the difference between this and larger models is marginal — the bottleneck is chunk quality, not embedding precision.
+
+**Local ChromaDB.** No external infrastructure needed. The full Chia docs (~200 files) index in under 5 minutes and the database is a few hundred MB. A hosted vector DB adds complexity without benefit at this scale.
+
+**LangChain for orchestration.** Handles document loading, text splitting, and the retrieval pipeline. Avoids reimplementing standard RAG plumbing.
 
 ## Setup
 
-Use Python 3.8 to 3.13. This does not work on Python 3.14 and above. 
-
-1. Clone this repository
-2. Install dependencies: `pip install -r requirements.txt --break-system-packages`
-3. Clone the Chia Docs repository: `git clone https://github.com/Chia-Network/chia-docs.git`
-4. Set OpenAI API key: `export OPENAI_API_KEY='your-key-here'`
-5. Load and process documentation: `python load_docs.py`
-6. Query the documentation: `python query.py "your question here"`
+Requires Python 3.8–3.13 and an OpenAI API key.
 
 ```bash
-source venv/bin/activate
+git clone https://github.com/yourusername/chia-docs-semantic-search.git
+cd chia-docs-semantic-search
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 export OPENAI_API_KEY='your-key-here'
-python query.py "What hardware do I need for farming?"
 ```
 
-The `load_docs.py` script clones the Chia documentation repository and processes approximately 200 markdown files into the vector database. This takes 3-5 minutes on first run. Subsequent queries use the cached database.
+## Usage
 
-## Example Output
-
-### Command
+**Index documentation:**
 ```bash
-
-➜  chia-docs-semantic-search git:(main) python query.py "What hardware do I need?"
+python cli.py load /path/to/docs/directory
 ```
 
-### Output
+**Query:**
+```bash
+python cli.py query "What hardware do I need for farming?"
 ```
+
+## Example
+
+```
+$ python cli.py query "What hardware do I need?"
+
 Query: What hardware do I need?
 
-Loading vector store...
-/Users/roy/Projects/chia-docs-semantic-search/query.py:28: LangChainDeprecationWarning: The class `Chroma` was deprecated in LangChain 0.2.9 and will be removed in 1.0. An updated version of the class exists in the `langchain-chroma package and should be used instead. To use it run `pip install -U `langchain-chroma` and import as `from `langchain_chroma import Chroma``.
-  vectorstore = Chroma(
-Retrieving relevant documentation...
-
-Generating answer...
-
-=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+============================================================
 ANSWER
-=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
-Answer (based on the docs):
+============================================================
+The hardware you need depends on whether you're plotting or farming.
 
-- The hardware you need depends on whether you’re plotting or farming.
+For plotting: a fast CPU or GPU, temporary storage (SSD recommended),
+and enough RAM. For farming: almost any 64-bit computer made after 2010,
+including a Raspberry Pi 4 with 4+ GB RAM.
 
-Plotting hardware (to create plots)
-- Main components: temporary storage and a processor (CPU or GPU).
-- Temporary storage tradeoffs:
-  - RAM: fastest and doesn’t wear out from plotting, but requires a high-end workstation; tends to be economical mainly for large farms (> ~1 PiB).
-  - HDD: inexpensive and durable, but significantly slower.
-  - SSD: fast and practical; SSDs can wear out over time, so high-endurance enterprise NVMe is recommended.
-- In short: more compute and faster temporary storage speed mean faster plotting. RAM, SSDs, and/or GPUs/CPUs are the key choices. Most setups use a combination that fits budget and plot rate needs.
-
-Farming hardware (to store and farm plots)
-- You need a 64-bit CPU (and a 64-bit OS) since farming is done on a 64-bit platform.
-- Windows, Linux, and macOS are supported.
-- Minimum for farming (from the farming guide): a Raspberry Pi 4 with 4 GB RAM for a CLI farm, or 8 GB RAM for a GUI farm.
-- Most computers made after 2010 can be used for farming.
-- Plotting is resource-intensive, and while a Pi can be used for plotting (it will be slow), it’s not ideal long-term.
-
-Additional note
-- The page mentions a new proof format introduced in 2024, which will have slightly different hardware requirements for plotting and farming; the remainder of the page describes the original format.
-
-=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+============================================================
 SOURCES
-=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+============================================================
 
-[Source 1]
-File: /Users/roy/Projects/chia-docs/docs/reference-client/plotting/plotting-hardware.md
-Content preview: If you do decide to buy hardware, this page will help you to decide what might work best for your farm.
+[1] docs/reference-client/plotting/plotting-hardware.md
+    If you do decide to buy hardware, this page will help you decide...
 
-When looking for a plotting machine, the main components to consider are the temporary storage ...
---------------------------------------------------------------------------------
+[2] docs/reference-client/getting-started/farming-guide.md
+    Ready? Let's get started! Obtain hardware...
+```
 
-[Source 2]
-File: /Users/roy/Projects/chia-docs/docs/reference-client/getting-started/farming-guide.md
-Content preview: :::
+## What I'd Build Next
 
-Ready? Let's get started!
+- **Evaluation benchmarks** — measure retrieval accuracy against a test set of question/answer pairs to validate chunk size and embedding choices with data instead of intuition.
+- **Multi-format support** — extend beyond markdown to RST, HTML, and PDF so the tool works with any documentation source.
+- **Web interface** — a simple frontend where users paste a repo URL and get a searchable docs instance.
 
-Obtain hardware
+## Development
 
-You may already have everything you need, but let's make sure. (All you need for this tutorial is the minimum requirements. We'll cover more optimized ...
---------------------------------------------------------------------------------
+```bash
+# Run tests
+pytest tests/ -v
 
-[Source 3]
-File: /Users/roy/Projects/chia-docs/docs/reference-client/plotting/plotting-hardware.md
-Content preview: sidebar_label: Hardware title: Plotting Hardware slug: /reference-client/plotting/plotting-hardware
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
-New proof format
-
-In 2024, w...
+# Run linter
+ruff check src/ tests/ cli.py
 ```
