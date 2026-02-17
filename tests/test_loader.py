@@ -1,6 +1,5 @@
 """Tests for document loading and chunking."""
 import pytest
-from unittest.mock import MagicMock
 from langchain_core.documents import Document
 from src.loader import chunk_documents, load_documents
 

@@ -1,5 +1,4 @@
 """Tests for query and retrieval logic."""
-import pytest
 from unittest.mock import patch, MagicMock
 from langchain_core.documents import Document
 from src.query import build_prompt, search_and_answer

@@ -1,5 +1,4 @@
 """Tests for vector store operations."""
-import pytest
 from unittest.mock import patch, MagicMock
 from src.store import create_store, load_store
 
