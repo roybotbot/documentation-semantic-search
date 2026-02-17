@@ -48,7 +48,7 @@ User query ──▶ Embed ──▶ Similarity Search─┘
 Requires Python 3.8–3.13 and an OpenAI API key.
 
 ```bash
-git clone https://github.com/yourusername/chia-docs-semantic-search.git
+git clone https://github.com/roybotbot/chia-docs-semantic-search.git
 cd chia-docs-semantic-search
 python -m venv .venv
 source .venv/bin/activate
