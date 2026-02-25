@@ -52,3 +52,26 @@ def search_and_answer(store, query: str, k: int = config.RETRIEVAL_K) -> tuple:
     response = llm.invoke(prompt)
 
     return response.content, docs
+
+
+def search_with_scores(store, query: str, k: int = config.RETRIEVAL_K) -> tuple:
+    """Search with similarity scores for retrieval debugging.
+
+    Args:
+        store: Chroma vector store instance.
+        query: The user's question.
+        k: Number of similar documents to retrieve.
+
+    Returns:
+        Tuple of (answer_text, list of (document, score) pairs).
+    """
+    logger.info("Searching (with scores) for: %s", query)
+    results = store.similarity_search_with_score(query, k=k)
+    docs = [doc for doc, _score in results]
+    logger.info("Retrieved %d documents", len(docs))
+
+    prompt = build_prompt(query, docs)
+    llm = ChatOpenAI(model=config.LLM_MODEL, temperature=config.LLM_TEMPERATURE)
+    response = llm.invoke(prompt)
+
+    return response.content, results
