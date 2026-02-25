@@ -4,6 +4,10 @@ import logging
 import os
 import sys
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def setup_logging(verbose: bool = False):
     """Configure logging format and level."""
@@ -17,8 +21,8 @@ def setup_logging(verbose: bool = False):
 def check_api_key():
     """Verify OpenAI API key is set."""
     if not os.getenv("OPENAI_API_KEY"):
-        print("Error: OPENAI_API_KEY environment variable not set.")
-        print("Set it with: export OPENAI_API_KEY='your-key-here'")
+        print("Error: OPENAI_API_KEY not set.")
+        print("Add it to .env or export it: export OPENAI_API_KEY='your-key'")
         sys.exit(1)
 
 
@@ -37,23 +41,40 @@ def cmd_load(args):
 def cmd_query(args):
     """Query the indexed documentation."""
     from src.store import load_store
-    from src.query import search_and_answer
+    from src.query import search_and_answer, search_with_scores
 
     check_api_key()
     store = load_store()
-    answer, sources = search_and_answer(store, args.question)
+    explain = getattr(args, "explain", False)
 
-    print(f"\nQuery: {args.question}\n")
-    print("=" * 60)
-    print("ANSWER")
-    print("=" * 60)
-    print(answer)
-    print("\n" + "=" * 60)
-    print("SOURCES")
-    print("=" * 60)
-    for i, doc in enumerate(sources, 1):
-        print(f"\n[{i}] {doc.metadata.get('source', 'Unknown')}")
-        print(f"    {doc.page_content[:150]}...")
+    if explain:
+        answer, scored_results = search_with_scores(store, args.question)
+        print(f"\nQuery: {args.question}\n")
+        print("=" * 60)
+        print("RETRIEVAL DETAILS")
+        print("=" * 60)
+        for i, (doc, score) in enumerate(scored_results, 1):
+            source = doc.metadata.get("source", "Unknown")
+            print(f"\n[{i}] {source}")
+            print(f"    Score: {score:.4f}")
+            print(f"    {doc.page_content[:150]}...")
+        print("\n" + "=" * 60)
+        print("ANSWER")
+        print("=" * 60)
+        print(answer)
+    else:
+        answer, sources = search_and_answer(store, args.question)
+        print(f"\nQuery: {args.question}\n")
+        print("=" * 60)
+        print("ANSWER")
+        print("=" * 60)
+        print(answer)
+        print("\n" + "=" * 60)
+        print("SOURCES")
+        print("=" * 60)
+        for i, doc in enumerate(sources, 1):
+            print(f"\n[{i}] {doc.metadata.get('source', 'Unknown')}")
+            print(f"    {doc.page_content[:150]}...")
 
 
 def main():
@@ -68,6 +89,10 @@ def main():
 
     query_parser = subparsers.add_parser("query", help="Query indexed documentation")
     query_parser.add_argument("question", help="Question to ask")
+    query_parser.add_argument(
+        "--explain", action="store_true",
+        help="Show retrieval scores and chunk details"
+    )
 
     args = parser.parse_args()
     setup_logging(args.verbose)
