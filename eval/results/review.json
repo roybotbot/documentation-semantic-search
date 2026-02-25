@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "query": "how much space do I need",
+    "category": "terminology_gap",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 2,
+    "query": "will my SSD die from plotting",
+    "category": "terminology_gap",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 3,
+    "query": "can I use a raspberry pi",
+    "category": "terminology_gap",
+    "semantic_hit": false,
+    "keyword_hit": true
+  },
+  {
+    "id": 4,
+    "query": "how do I get my money",
+    "category": "terminology_gap",
+    "semantic_hit": false,
+    "keyword_hit": false
+  },
+  {
+    "id": 5,
+    "query": "what's the lottery thing",
+    "category": "terminology_gap",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 6,
+    "query": "how do I back up my keys so I don't lose everything",
+    "category": "terminology_gap",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 7,
+    "query": "what's the difference between compressed and regular plots",
+    "category": "terminology_gap",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 8,
+    "query": "how do I start farming chia",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 9,
+    "query": "how do I join a pool",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 10,
+    "query": "how do I check if my farm is working",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 11,
+    "query": "how do I move plots to another computer",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 12,
+    "query": "how do I install chia on linux",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": false
+  },
+  {
+    "id": 13,
+    "query": "what hardware should I buy for plotting",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 14,
+    "query": "how do I set up a cold wallet for chia",
+    "category": "natural_language",
+    "semantic_hit": false,
+    "keyword_hit": true
+  },
+  {
+    "id": 15,
+    "query": "how do I create my first plot",
+    "category": "natural_language",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 16,
+    "query": "what should I know before starting",
+    "category": "hard",
+    "semantic_hit": true,
+    "keyword_hit": false
+  },
+  {
+    "id": 17,
+    "query": "is it worth it",
+    "category": "hard",
+    "semantic_hit": true,
+    "keyword_hit": false
+  },
+  {
+    "id": 18,
+    "query": "my node won't sync",
+    "category": "hard",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 19,
+    "query": "something is wrong with my farm",
+    "category": "hard",
+    "semantic_hit": true,
+    "keyword_hit": true
+  },
+  {
+    "id": 20,
+    "query": "how does chia work",
+    "category": "hard",
+    "semantic_hit": true,
+    "keyword_hit": false
+  }
+]

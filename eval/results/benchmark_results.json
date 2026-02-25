@@ -1,0 +1,822 @@
+[
+  {
+    "id": 1,
+    "query": "how much space do I need",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "For a single plot, the guide lists these requirements:\n\n- RAM: 4 GB\n- Temporary storage: about 275 GB\n- Free space for the final plot: about 108.8 GB (the final plot is ~101.4 GiB)\n\nTotal practical storage requirement is roughly 380\u2013390 GB, plus a bit of headroom. The guide notes that a laptop or desktop with 400 GB of free space will satisfy these requirements. An SSD is faster and recommended for this task.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 1.079437255859375,
+          "snippet": "A laptop or desktop with 400 GB of free space will satisfy these requirements. A 512-GB external SSD (available for ~$35 on Amazon) is another option.\n\nDatabase SSD\n\nIn order to store the blockchain d"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 1.1443729400634766,
+          "snippet": "However, for creating your first plot, it's a good idea to use the equipment you already own. Once you get a feel for Chia farming, you will have a much better idea of what to acquire later.\n\nPlot sto"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 1.2325220108032227,
+          "snippet": "How big are plot sizes (k)?\n\nYou can see some example plot sizes, times to plot, and working space needed based on various k's in these k size tables. Current working space needed for the default plot"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "farming-guide.md",
+          "score": 0.10118797602391746
+        },
+        {
+          "source": "pool-farming.md",
+          "score": 0.10116282825584855
+        },
+        {
+          "source": "plotting-faq.md",
+          "score": 0.09310802556541468
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "query": "will my SSD die from plotting",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "Yes, there is a risk, especially with consumer SSDs. Plotting is write-intensive and SSDs have a finite amount of writes. If you plan to create thousands of plots, using a consumer SSD can wear it out. To reduce the risk:\n\n- Use enterprise or data-center grade NVMe SSDs for temporary plotting storage.\n- Do not use your root/OS SSD for plotting.\n- You can plot to HDDs (and even via Thunderbolt 3 to non-root SSDs) and move plots to long-term storage.\n- For best durability, consider using separate temporary (SSD) and final (SSD or HDD) directories as appropriate.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.7269117832183838,
+          "snippet": "What is recommended for plotting?\n\nWe think you will want to use used Data Center grade NVMe SSD drives to create your plots. Regular consumer NVMe SSD generally has too low of a TBW rating. One of ou"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/ssd-endurance.md",
+          "score": 0.7918520569801331,
+          "snippet": "title: SSD Endurance slug: /reference-client/plotting/ssd-endurance\n\nThe fastest plot creation is done completely in memory, but requires a server with a large amount of DRAM (256 GB for BladeBit CUDA"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.8098161220550537,
+          "snippet": "SSD -- Most farmers choose to use an enterprise NVMe SSD for the temporary storage. These SSDs can handle large amounts of reads and writes in their lifetimes.\n\nHDD -- If you don't mind plotting slowl"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-hardware.md",
+          "score": 0.2442584237465632
+        },
+        {
+          "source": "ssd-endurance.md",
+          "score": 0.18783437162116773
+        },
+        {
+          "source": "farming-guide.md",
+          "score": 0.16341328826922724
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "query": "can I use a raspberry pi",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "Yes\u2014with caveats.\n\n- Pi 4 is supported. Pi 3 is not.\n- You can install and run harvesters, farmers, and full nodes on the Pi. Plotting on a Pi is feasible now, but slower (Pi 4 ~0.025 GiB/min) compared to desktops/laptops (0.07\u20130.10 GiB/min) and using Chacha8 instead of AES.\n- The Pi is not a candidate for Timelords or VDF clients.\n- It is highly recommended to store the blockchain and wallet database on an SSD or NVMe drive rather than the SD card.\n- The GUI is not recommended on the 4GB Raspberry Pi 4 model. A 64-bit OS is required.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 1.03335702419281,
+          "snippet": "Run the following command:\n\nshasum -a 256 [location of file]\n\nFor example:\n\nshasum -a 256 ~/Downloads/chia-blockchain_1.1.7_amd64.deb\n\nCan I use a fast SAS HDD for storing the blockchain's database?\n\n"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/installation.md",
+          "score": 1.1370049715042114,
+          "snippet": "Add this line to /etc/fstab so that swap available on reboot:\n\n/swap swap swap defaults 0 0\n\nHere is an excellent walk-through of increasing swap space on Raspbian 64.\n\nSetup {#raspberry-pi-setup}\n\nRu"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/installation.md",
+          "score": 1.1689616441726685,
+          "snippet": "# This should say \"nothing to commit, working tree clean\"\n# if you have uncommitted changes, RELEASE.dev0 will be reported\ngit status\n\n# Install the new version\n./Install.ps1\n\n# Activate the virtual e"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-compression.md",
+          "score": 0.14678595412012413
+        },
+        {
+          "source": "plotting-basics.md",
+          "score": 0.1201113517687951
+        },
+        {
+          "source": "installation.md",
+          "score": 0.06278060076952616
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "query": "how do I get my money",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "Here\u2019s how you can get to your money in the wallet, based on the documentation:\n\n- Check your balances:\n  - Total Balance vs Spendable Balance.\n  - If Spendable Balance is less than Total Balance, some coins are locked (they\u2019re part of a pending transaction or an Offer).\n\n- Unlock locked coins:\n  - Cancel any pending offers.\n  - In the wallet, go to the Summary panel and use Actions \u2192 Delete Unconfirmed Transactions to unlock the coins.\n\n- Ensure the wallet is up to date:\n  - Make sure you\u2019re using the latest version of the software.\n  - Wait for the wallet to fully sync to the same height as your Full Node; once synced, the Wallet Balance will be correct.\n\n- If you had a problematic transaction:\n  - You can resubmit the transaction after ensuring everything is up to date and synced.\n\nIf you still don\u2019t see the funds after these steps, you may need to check for any additional issues, but the above covers the common causes and fixes.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 1.2769269943237305,
+          "snippet": "Shut down your wallet and node\n\nDelete your wallet db files: located at ~/.chia/mainnet/wallet/db. This will require syncing up your wallet, but not your node. And then you can resubmit the transactio"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 1.2987792491912842,
+          "snippet": "Some of the potential causes include:\n\nYou don't have enough money in your wallet. Double check your wallet's Total Balance.\n\nYou have enough money, but one or more of your coins are locked. Chia uses"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-many-machines.md",
+          "score": 1.3070703744888306,
+          "snippet": "How to Find Your Keys\n\n[warning]\nONLY VIEW YOUR KEYS IN A SAFE PLACE AND MAKE SURE NO ONE CAN SEE YOUR SCREEN.\n\nUsing CLI\n\nchia keys show\n\nUsing the GUI\n\nClick on the Logout icon at the top right. You"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-hardware.md",
+          "score": 0.07684504540220612
+        },
+        {
+          "source": "faq.md",
+          "score": 0.03269749907532321
+        },
+        {
+          "source": "wallet-guide.md",
+          "score": 0.031604428114548534
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "query": "what's the lottery thing",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "It refers to Chia\u2019s block-creation lottery. In farming, each plot is like a lottery ticket, and a new draw happens roughly every 9 seconds. If you win the lottery, you earn the right to create the next block and receive Chia rewards. Pooling changes how those rewards are distributed among participants.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-basics.md",
+          "score": 1.2239152193069458,
+          "snippet": "Our consensus section has the technical details of how this \"lottery\" system works.\n\nEstimated Time to Win\n\nYou can find your win time estimation from the Farming tab in the Chia software. It's import"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-basics.md",
+          "score": 1.3869504928588867,
+          "snippet": "title: Farming Basics slug: /reference-client/farming/farming-basics\n\nFarming is the next step after plotting. Once a plot has been created, you have a chance of winning Chia as long as the file is be"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/pool-farming.md",
+          "score": 1.4040746688842773,
+          "snippet": "With the pooling protocol, your farmer will communicate with a specific pool server, and send proofs of space very often to that pool, in order to prove how much plotted space you have. Therefore the "
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "farming-basics.md",
+          "score": 0.1268173683762881
+        },
+        {
+          "source": "farmers.md",
+          "score": 0.04581079087891042
+        },
+        {
+          "source": "pool-farming.md",
+          "score": 0.016310803258156186
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "query": "how do I back up my keys so I don't lose everything",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "- Back up the 24-word recovery phrase (the wallet\u2019s mnemonic). This phrase is all you need to recover your wallet on a new computer.\n- When you create a wallet key in the GUI, you\u2019re shown a list of twenty-four words. Write them down in order and store them in a safe place, offline.\n- For any keys you already have, ensure you have the backup of their 24-word mnemonic as well. If you delete a key, you\u2019ll lose access unless you have its mnemonic backup.\n- Keep these backups secure and private; do not share them or view them in unsafe environments.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-many-machines.md",
+          "score": 0.8896339535713196,
+          "snippet": "How to Find Your Keys\n\n[warning]\nONLY VIEW YOUR KEYS IN A SAFE PLACE AND MAKE SURE NO ONE CAN SEE YOUR SCREEN.\n\nUsing CLI\n\nchia keys show\n\nUsing the GUI\n\nClick on the Logout icon at the top right. You"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/key-management.md",
+          "score": 1.0709542036056519,
+          "snippet": "Save the file and close it.\n\nDelete the second key: chia keys delete -f <fingerprint>\n\n/!\\ Caution: make sure you have a backup of the 24 words mnemonic or you will lose access to the key for ever.\n\nI"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-how-to.md",
+          "score": 1.0861155986785889,
+          "snippet": "Showing all public keys derived from your master seed and private key:\n\nLabel: Test Wallet\nFingerprint: 2225787457\nMaster public key (m): ab895c85aea6e7339f1a021ad14eddfa3f5ef97eb37ccbdf0b30c1c88c5930"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "key-management.md",
+          "score": 0.2726005442463901
+        },
+        {
+          "source": "locating-keys.md",
+          "score": 0.2688617413863555
+        },
+        {
+          "source": "farming-many-machines.md",
+          "score": 0.08250036478978172
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "query": "what's the difference between compressed and regular plots",
+    "category": "terminology_gap",
+    "semantic": {
+      "answer": "- Completeness at creation:\n  - Uncompressed plots: complete when created.\n  - Compressed plots: incomplete when created; missing data can be generated later as needed.\n\n- Size and storage:\n  - Uncompressed plots tend to be larger.\n  - Compressed plots are smaller, so more plots fit on a given disk (and can earn more over time for the same amount of storage).\n\n- How they\u2019re produced:\n  - Uncompressed: created by tools like the original ChiaPos, madMAx, BladeBit RAM/disk.\n  - Compressed: created by tools such as BladeBit CUDA and GigaHorse; introduced to official Chia software in v2.0.\n\n- Data determinism:\n  - Plot data is deterministic: a plot\u2019s ID (a 32-byte hash) and k-value determine all contents; the same ID on different machines yields identical plots, enabling on-the-fly reconstruction of missing data.\n\n- Rewards:\n  - Each individual plot earns the same rewards as an equivalent uncompressed plot (the only difference is size, not reward per plot).\n\n- Losless vs lossy note:\n  - There are two basic types of compression in theory, but compressed Chia plots don\u2019t actually use lossy compression; the lossy terminology is an analogy.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-basics.md",
+          "score": 0.5734373927116394,
+          "snippet": "Compressed plots\n\nIn 2023, some major changes were made to the plotting process, mostly due to the introduction of \"compressed\" plots.\n\n[info]\nTechnically, all Chia plots are compressed -- they consis"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-basics.md",
+          "score": 0.6252140998840332,
+          "snippet": "Plot \"compression\" is possible because the data contained within a plot is deterministic. A plot's ID -- a 32-byte hash -- is all that is needed to determine the entirety of its contents. In other wor"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-basics.md",
+          "score": 0.7115435600280762,
+          "snippet": "By the end of 2022, it had become apparent that a form of \"lossy\" plot compression was possible. A few different competing techniques were being devised that involved omitting one or two tables, or so"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-basics.md",
+          "score": 0.2207039562081511
+        },
+        {
+          "source": "farming-compressed-plots.md",
+          "score": 0.12874492908405463
+        },
+        {
+          "source": "plotting-hardware.md",
+          "score": 0.10303365606906233
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "query": "how do I start farming chia",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "To start farming Chia, follow these steps:\n\n- Ensure you have the required hardware.\n- Install Chia: download from the official download page and run the installer for your OS. On the final screen, check both boxes so you can type chia in a terminal and so the app auto-starts.\n- Run and configure: the first start prompts you to pick Wallet Mode or Farming Mode. Choose Farming Mode.\n- Create a wallet: If you don\u2019t have a wallet, create a new wallet key (or import an existing one).\n- Set up farming: the guide covers syncing a full node and creating your first plot.\n- Start farming: after plotting completes, farming starts in the background (uses little network bandwidth and storage).",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.6310421228408813,
+          "snippet": "sidebar_label: Farming Guide title: Beginner's Guide to Farming slug: /reference-client/getting-started/farming-guide\n\nSo you want to be a Chia farmer? You've come to the right place!\n\nChia plotting a"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.6912174224853516,
+          "snippet": "Why do I want to farm Chia?\n\nYou can farm Chia on the unused storage of your laptop, desktop, or corporate network and, in return, you have the chance to receive rewards in chia for helping secure the"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.6974637508392334,
+          "snippet": "Once you have the required hardware, it's time to install Chia.\n\nInstall Chia\n\nHead to the official download page; download and run the installer for your Operating System. The default settings are fi"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "faq.md",
+          "score": 0.24090896932984804
+        },
+        {
+          "source": "installation.md",
+          "score": 0.20370284708283953
+        },
+        {
+          "source": "farming-basics.md",
+          "score": 0.20265950856028725
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "query": "how do I join a pool",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "Short answer:\nTo join a pool, you create a Plot NFT that points to the pool (via GUI or CLI). You\u2019ll provide the pool URL (must start with https://) and pay a small fee. After it\u2019s confirmed, you\u2019ll be pooled and you can switch pools later.\n\nGUI (wallet)\n- Open your wallet, click the Pooling icon, then JOIN A POOL.\n- Choose Connect to pool.\n- Enter a valid pool URL (e.g., from chialinks.com). You can look up pools there.\n- Confirm to create the Plot NFT (this costs one mojo; you may also add a blockchain fee). It may take several minutes to confirm.\n- You can change pools later using the Plot NFT.\n\nCLI\n- Run: chia plotnft create -s pool -u https://<pool_url>\n- After creation, wait for it to be confirmed in the Pools tab. You only need 1 plot NFT.\n- You can join a pool later or switch pools at any time.\n\nNotes\n- The pool URL must start with https://.\n- The pool contract address appears in some outputs and begins with \u201cxch\u201d (contextual detail; not required to join).",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-how-to.md",
+          "score": 0.7462372779846191,
+          "snippet": "The pool contract address is listed in the middle of the output. It will begin with \"xch\".\n\nGUI\n\nOpen your wallet, click the Pooling icon in the lower-left corner, and click JOIN A POOL:\n\nJoin a pool\n"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/pool-farming.md",
+          "score": 0.7858023643493652,
+          "snippet": "chia plotnft create -s local\n\nConnect to pool: join a pool, and immediately start pooling, as soon as you make some plots. From CLI:\n\nchia plotnft create -s pool -u https://bar.examplepool.org\n\nNote t"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/pool-farming.md",
+          "score": 0.7926681637763977,
+          "snippet": "How to Start Pooling in 6 Steps\n\n[note]\nThe official pooling protocol was introduced in verion 1.2 in mid-2021. All plots created before this point, as well as newer plots created with following the p"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "pool-farming.md",
+          "score": 0.40401693080217793
+        },
+        {
+          "source": "pools.md",
+          "score": 0.34016943091754626
+        },
+        {
+          "source": "plotting-how-to.md",
+          "score": 0.23826319164606408
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "query": "how do I check if my farm is working",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "Here are quick ways to check if your farm is working, using both CLI and GUI.\n\nCLI (command line)\n- Make sure you\u2019re activated: run chia activate as usual.\n- Check farming status: run chia farm summary.\n- If the first line says Farming status: Farming, your farm is currently farming and there aren\u2019t broader errors (though you may still be syncing).\n- For more detail, enable INFO logging:\n  - Edit the config at ~/.chia/mainnet/config.\n  - Find the farmer section and set log_level to INFO (the snippet shows:\n    farmer:\n      logging: &id001\n        log_filename: log/debug.log\n        log_level: INFO\n        log_stdout: false)\n  - Save the file (and restart Chia if needed).\n  - Open the log file (log/debug.log) to see detailed operation messages.\n- Optional: Check if your plots are passing the filter (see the Farming FAQ section on plots and filtering for details).\n\nGUI (desktop)\n- Open the Farm panel (and Harvest panel) in the 2.0 UI to get an overview of your farm\u2019s health. The Farm panel shows Farm Health information to help you assess status at a glance.\n\nIn short: run chia farm summary to verify \u201cFarming status: Farming\u201d; if you need more detail, switch logs to INFO and inspect the log file, or use the GUI Farm panel for a visual health overview.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/checking-farm-health.md",
+          "score": 0.5987493991851807,
+          "snippet": "title: Checking Farm Health slug: /reference-client/troubleshooting/checking-farm-health\n\n\"Is my farm working?\"\n\nIt's one of the most common questions farmers ask themselves. This is understandable --"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/checking-farm-health.md",
+          "score": 0.6955429315567017,
+          "snippet": "CLI Health\n\nCheck if your farm thinks it's farming\n\nBefore going further, please make sure whether your farm actually considers itself to be farming. There's a good chance that you might not since you"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-faq.md",
+          "score": 0.8191807866096497,
+          "snippet": "title: Farming FAQ slug: /reference-client/troubleshooting/farming-faq\n\nHow to tell if Chia Farming is Working?\n\nWhen you are first operating Chia and wondering if the software is working, here are so"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "checking-farm-health.md",
+          "score": 0.2200440830708423
+        },
+        {
+          "source": "check-if-things-are-working.md",
+          "score": 0.1057950767414509
+        },
+        {
+          "source": "farming-faq.md",
+          "score": 0.10474871227517663
+        }
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "query": "how do I move plots to another computer",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "You can move plots to another computer by moving the plot files themselves and then adding the destination directory on the new machine.\n\nKey points from the doc:\n- Plots are just files and can be moved to another directory or another machine (OS doesn\u2019t matter).\n- On the new machine, the farmer must have access to the same keys for the plots to be usable.\n- You can use the -mv extension trick to avoid the harvester treating a plot as incomplete while it\u2019s being moved.\n- After moving, add the directory on the new machine with chia plots add -d '/path/to/directory' (CLI) or via the GUI (Farmer tab \u2192 Add Plots) and restart the farmer.\n\nSteps:\n- Optionally append -mv to the plot file extension before moving, then rename back after the move.\n- Copy or move the plot files from the old machine to a directory on the new machine (or a shared location).\n- Ensure the new machine has the same keys as the old one.\n- On the new machine, add the directory to the farmer:\n  - CLI: chia plots add -d '/path/to/directory'\n  - GUI: Farmer tab \u2192 Add Plots \u2192 select the directory\n- Restart the farmer; the plots should become visible.\n\nIf you want automation, you can also use community tools like Plow or Plotman.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/moving-plots.md",
+          "score": 0.7505571842193604,
+          "snippet": "Manual\n\nIf you are only plotting a small farm, or if your plot times are greater than 15 minutes or so, then manually moving is a fine option.\n\nNew Directory\n\n:::tip To prevent the harvester seeing a "
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/moving-plots.md",
+          "score": 0.8060504198074341,
+          "snippet": "Luckily, a few community members have created scripts to automate the plot-moving process. This page will show you how to use these tools. If you still prefer a manual process, we will cover that as w"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/moving-plots.md",
+          "score": 0.809027910232544,
+          "snippet": "title: Moving Plots slug: /reference-client/plotting/moving-plots\n\nPlots are stored in files. They can be moved from one directory to another, and even to another machine (the operating system doesn't"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-basics.md",
+          "score": 0.28487018465403136
+        },
+        {
+          "source": "moving-plots.md",
+          "score": 0.16726891002807567
+        },
+        {
+          "source": "checking-farm-health.md",
+          "score": 0.15031479483737045
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "query": "how do I install chia on linux",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "Here\u2019s the Linux installation workflow as described in the docs:\n\n- Change to the chia-blockchain directory:\n  - cd ../chia-blockchain/\n\n- Update dependencies (use a newer chiavdf version):\n  - sed -i 's|\"chiavdf==1.0.1\"|\"chiavdf==1.0.2.dev1\"|' setup.py\n\n- Make keychain work on Linux (and OpenBSD if needed):\n  - sed -i 's|elif platform == \"linux\":|elif platform == \"linux\" or platform.startswith(\"openbsd\"):|' chia/util/keychain.py\n\n- Generate a hardcoded random secret for headless operation:\n  - _keyring=$(dd status=none if=/dev/random bs=8 count=1 | od -H | tr -d ' ' | head -1 | cut -b8-25)\n  - sed -i 's|keyring.keyring_key = \"your keyring password\"|keyring.keyring_key = \"'\"$_keyring\"'\"|' chia/util/keychain.py\n  - unset _keyring\n\n- Install:\n  - sh install.sh\n\n- Initialize and create keys:\n  - chia init\n  - chia keys generate\n\n- Optional: disable UPnP if you\u2019re not forwarding ports:\n  - chia configure --enable-upnp false\n\n- Start the services (node, wallet, farmer, harvester):\n  - chia start node wallet farmer harvester\n\nNote: The GUI section in the doc is labeled as having been tested on OpenBSD; the Linux instructions above focus on the command-line installation steps.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.6156781911849976,
+          "snippet": "Once you have the required hardware, it's time to install Chia.\n\nInstall Chia\n\nHead to the official download page; download and run the installer for your Operating System. The default settings are fi"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.6167676448822021,
+          "snippet": "For power users, it is possible to install Chia from source. In this case, you will run Chia from a virtual environment on the command line.\n\nHowever, most users will prefer to download a packaged ins"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/installation.md",
+          "score": 0.6559062600135803,
+          "snippet": "cd ../chia-blockchain/\n# use our previous compile results\nsed -i 's|\"chiavdf==1.0.1\"|\"chiavdf==1.0.2.dev1\"|' setup.py\n\n# use a hardcoded random secret so the software can run headless and without\n# us"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "installation.md",
+          "score": 0.39366792262144973
+        },
+        {
+          "source": "check-if-things-are-working.md",
+          "score": 0.20458221698051227
+        },
+        {
+          "source": "faq.md",
+          "score": 0.1895756806466872
+        }
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "query": "what hardware should I buy for plotting",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "There isn\u2019t a one-size-fits-all answer. The page suggests you decide based on your farm size and the tradeoff between plotting speed and cost. Key guidance from the page:\n\n- Main components to consider when buying plotting hardware:\n  - Temporary storage\n  - Processor type (CPU or GPU)\n\n- Temporary storage options and tradeoffs:\n  - RAM\n    - Pros: Doesn\u2019t wear out from plotting; very fast\n    - Cons: Requires a high-end workstation or server; typically economical only for large farms (>1 PiB)\n  - HDD\n    - Pros: Doesn\u2019t wear out; cheap\n    - Cons: Much slower; suitable for small farms (<100 TiB) but typically too slow for larger farms\n  - SSD\n    - Pros: Fast\n    - Cons: Wears out over time; use high-endurance NVMe SSDs recommended\n\n- General notes:\n  - Most computers made in the last decade can be used for plotting.\n  - If you already own a computer not being heavily used, plotting can be done without buying new hardware.\n  - Plotting is a one-time activity; farming is a long-term endeavor.\n  - If you do buy hardware, consider whether the time saved on plotting justifies the cost; many farmers use existing equipment.\n\n- Tools to help decide:\n  - ChiaCalculator.com can help you understand the tradeoffs for your situation.\n\nIf you want, I can summarize these points into a quick decision guide tailored to your farm size.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-hardware.md",
+          "score": 0.7013424634933472,
+          "snippet": "sidebar_label: Hardware title: Plotting Hardware slug: /reference-client/plotting/plotting-hardware\n\nNew proof format\n\nIn 2024, we proposed a new proof format. This format will have slightly different"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-hardware.md",
+          "score": 0.7060843706130981,
+          "snippet": "If you do decide to buy hardware, this page will help you to decide what might work best for your farm.\n\nWhen looking for a plotting machine, the main components to consider are the temporary storage "
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-hardware.md",
+          "score": 0.7446272373199463,
+          "snippet": "Most computers made within the last decade can be used to create Chia plots.\n\nDo you already own a computer that is not being heavily used?\n\nPlotting is a one-time activity.\n\nWhat will you do with you"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "plotting-hardware.md",
+          "score": 0.24409429534909793
+        },
+        {
+          "source": "plotting-basics.md",
+          "score": 0.09193556978279326
+        },
+        {
+          "source": "farming-guide.md",
+          "score": 0.07935961726481201
+        }
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "query": "how do I set up a cold wallet for chia",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "The provided documentation does not cover setting up a cold wallet for Chia. It only mentions:\n\n- Installing Chia\n- Running in wallet mode\n- Creating a new wallet key or importing an existing wallet\n- (In the wallet guide) syncing a wallet node and learning about offer files\n\nThere are no steps about cold/offline wallet setup in the given content. If you\u2019d like, I can point you to where to look in the docs for related topics or help you extract the wallet-related steps that are present.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.6280163526535034,
+          "snippet": "Once you have the required hardware, it's time to install Chia.\n\nInstall Chia\n\nHead to the official download page; download and run the installer for your Operating System. The default settings are fi"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/wallet-guide.md",
+          "score": 0.6338319778442383,
+          "snippet": "Ready? Let's get started!\n\nInstall Chia\n\nHead to the official download page; download and run the installer for your Operating System. The default settings are fine for most setups.\n\nTwo check boxes w"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/wallet-guide.md",
+          "score": 0.6826531887054443,
+          "snippet": "title: Wallet Guide slug: /reference-client/getting-started/wallet-guide\n\nWallet Guide\n\nSo you want to set up and use a chia wallet? You've come to the right place!\n\nInstall Chia\n\nRun and Configure Ch"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "key-management.md",
+          "score": 0.36059847829030345
+        },
+        {
+          "source": "faq.md",
+          "score": 0.2289198962488003
+        },
+        {
+          "source": "farming-guide.md",
+          "score": 0.10337517635236315
+        }
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "query": "how do I create my first plot",
+    "category": "natural_language",
+    "semantic": {
+      "answer": "Here's how to create your first plot:\n\n- Open the Chia app, go to the Farm tab, and click ADD A PLOT.\n- If you have a plot NFT, it will show here. Your plots should be associated with the same NFT (this helps with farming to a pool and changing pools later).\n- In the plot creation wizard:\n  - Keys: typically you don\u2019t need to change these; they are the keys you set up previously.\n  - Choose a K value and a compression level. Depending on your plotter, you may need to select one or the other. If a Compression Level dropdown appears, you can choose 3 for a modest level of compression.\n  - Select a temporary storage location if prompted by your plotter. Some plots can be created entirely in RAM (RAM plots) and others require temporary storage on disk.\n  - Final directory: choose where the completed plot will be copied after creation (most farmers use an HDD for this).\n  - Number of plots: set this to 1 for your first plot.\n- Click CREATE. You\u2019ll be taken to a progress panel that shows the plotting progress.\n- Optional: If you want to experiment later, you can try different settings. Compressed plots (level 3) are generally faster to harvest, while a C0 (uncompressed) plot is fine for getting started.\n- If you\u2019re using RAM plots, note that they require a lot of memory (roughly 256 GB\u2013416 GB, depending on the plotter).\n\nThat\u2019s the basic flow for creating your first plot.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.6846222281455994,
+          "snippet": "Create a plot\n\nPlots are large files that consist almost entirely of cryptographic data to be used in Chia farming. The plot creation process does not require a full node or wallet to be synced. In fa"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-how-to.md",
+          "score": 0.7865833044052124,
+          "snippet": "Choose plotter\n\nFor the Keys section, you typically won't need to change anything (these are the keys you set up previously).\n\nKeys\n\nNext, you will need to choose a k value and a compression level. Ce"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.7986384034156799,
+          "snippet": "Certain plotters are also capable of creating compressed plots, which are discussed in great detail in the Plotting Basics section. If the Compression Level dropdown appears, fee free to select 3. Thi"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "farming-guide.md",
+          "score": 0.2526971826802016
+        },
+        {
+          "source": "pool-farming.md",
+          "score": 0.22499082218861863
+        },
+        {
+          "source": "moving-plots.md",
+          "score": 0.21732824421287758
+        }
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "query": "what should I know before starting",
+    "category": "hard",
+    "semantic": {
+      "answer": "Here\u2019s what you should know before starting:\n\n- You\u2019ll set up a basic Chia farm that includes syncing a full node and creating your first plot.\n- The guide is beginner-friendly and intentionally light on technical details.\n- It will take roughly 1 hour to several days to complete, depending on various factors; most of this time you won\u2019t need to be actively using your computer.\n- You can use hardware you already own.\n- The recommended steps are: Obtain hardware, Install Chia, Run and configure Chia, Create a plot, Start farming. Subsequent pages will cover more detailed concepts.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 1.3116554021835327,
+          "snippet": "Start farming\n\nBefore you can begin farming, you need to be running a synced full node. Earlier in this tutorial, you either chose to sync from genesis, or to sync from a checkpoint database. In both "
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/wallet-guide.md",
+          "score": 1.3274211883544922,
+          "snippet": "Ready? Let's get started!\n\nInstall Chia\n\nHead to the official download page; download and run the installer for your Operating System. The default settings are fine for most setups.\n\nTwo check boxes w"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 1.365241527557373,
+          "snippet": "sidebar_label: Farming Guide title: Beginner's Guide to Farming slug: /reference-client/getting-started/farming-guide\n\nSo you want to be a Chia farmer? You've come to the right place!\n\nChia plotting a"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "using-the-gui.md",
+          "score": 0.04306021033705908
+        },
+        {
+          "source": "plotting-compression.md",
+          "score": 0.031384959026868206
+        },
+        {
+          "source": "farming-basics.md",
+          "score": 0.02804233138686145
+        }
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "query": "is it worth it",
+    "category": "hard",
+    "semantic": {
+      "answer": "The provided context does not include an explicit answer to \"is it worth it.\"\n\nWhat it does say (in the Pro section) is that:\n- Pros target very large storage (over a petabyte) and may use advanced tactics like GPU plotting and HBAs.\n- Used enterprise storage gear can be cost-effective and a practical starting point.\n- It requires learning about enterprise storage protocols (e.g., SAS).\n- Pros typically mix consumer and enterprise gear to stay cost-efficient.\n\nFrom this, whether it\u2019s worth it depends on your goals, budget, and willingness to handle the associated complexity. If you\u2019d like, I can summarize the trade-offs more explicitly based on that text.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/pool-farming.md",
+          "score": 1.429255723953247,
+          "snippet": "potentially running you into the red. It is for this reason we advise against FPPS/PPS systems, unless you have extensive experience running these pools and how to build mitigations around it to help "
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-hardware.md",
+          "score": 1.4508094787597656,
+          "snippet": "Most computers made within the last decade can be used to create Chia plots.\n\nDo you already own a computer that is not being heavily used?\n\nPlotting is a one-time activity.\n\nWhat will you do with you"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/reference-farming-hardware.md",
+          "score": 1.5176457166671753,
+          "snippet": "Pro\n\nPros are shooting for over a petabyte of storage, where more advanced tactics come into play. These can include GPU plotting, HBAs (host bus adapters), and used enterprise storage servers. Used e"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "reference-farming-hardware.md",
+          "score": 0.029895018610020304
+        },
+        {
+          "source": "plotting-hardware.md",
+          "score": 0.019600289408322525
+        },
+        {
+          "source": "wallet-guide.md",
+          "score": 0.013435174087183081
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "query": "my node won't sync",
+    "category": "hard",
+    "semantic": {
+      "answer": "Here are troubleshooting steps based on the doc content for a node that won\u2019t sync or shows Not Synced:\n\n- It can take time to sync\n  - It can take a few minutes to start receiving peers and several hours to completely sync.\n\n- Check connectivity\n  - Use this link to check if your router\u2019s port 8444 is open: https://portchecker.co/\n  - You might need to disable UPnP in the config file (~/.chia/mainnet/config/config.yaml) or by running chia configure -upnp false.\n  - Ensure you don\u2019t have multiple Chia nodes on the same machine or in the same network. Close all Chia applications on your computer.\n  - Check firewall or antivirus software that might be blocking connections.\n\n- Clear potential peer data issues\n  - Delete the peer database: remove ~/.chia/mainnet/db/peer_table_node.sqlite\n  - Close then restart Chia.\n\n- Adjust syncing timeout\n  - Edit ~/.chia/mainnet/config/config.yaml and increase weight_proof_timeout from 180 to 400. If the setting isn\u2019t there, add it under the full_node section.\n\n- Force a refresh\n  - Use Force Reload (top menu bar \u2192 Force Reload). This may help get things syncing again after waiting 5\u201310 minutes.\n\n- Verify sync status\n  - You can check if you are synced by looking for a synced message in the wallet (top right) or on the Full Node tab.\n  - The Peak Height should closely match that of your peers. You can also confirm against a well-synced block explorer.\n\n- If you\u2019re still not syncing\n  - You have two options:\n    - Sync from genesis (the most secure option, but it will take a long time\u2014days to possibly a week or more depending on speed and peers).\n    - Download a checkpoint database (faster, but requires trusting the checkpoint data).\n\n- If you see blocks and connections but still Not Synced\n  - Try the above steps in order (check port, UPnP, firewall, restart after clearing peer DB, adjust weight_proof_timeout, force reload, and verify sync status). If issues persist, consider switching to a checkpoint-based sync or starting from genesis as described above.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.913570761680603,
+          "snippet": "Use this link to check if your router's port 8444 is closed: https://portchecker.co/\n\nStep 3: You might need to disable UPnP in the config file (~/.chia/mainnet/config/config.yaml) or by using the cli"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/plotting-faq.md",
+          "score": 0.9221110343933105,
+          "snippet": "How can I Get Synced and stay Synced?\n\nEvery user has copy of the blockchain on their PC and the goal is that everyone is in sync or very close. Click on the Full Node tab, scroll down to see the conn"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-guide.md",
+          "score": 0.9263120889663696,
+          "snippet": "[info]\nYou can continue with this guide while waiting for your faucet payment to arrive.\n\nSync your node\n\nClick the Full Node icon on the left side of your wallet:\n\nSyncing from genesis\n\nThis screen s"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "node-syncing.md",
+          "score": 0.152212751141841
+        },
+        {
+          "source": "faq.md",
+          "score": 0.11251038548773148
+        },
+        {
+          "source": "farmers.md",
+          "score": 0.10650499674083032
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "query": "something is wrong with my farm",
+    "category": "hard",
+    "semantic": {
+      "answer": "Here are the troubleshooting steps recommended in the docs when something seems wrong with your farm:\n\n- Verify farming status\n  - Run chia activate, then chia farm summary.\n  - If the first line says:\n    Farming status: Farming\n    \u2026then there are no broader errors reported.\n\n- Increase visibility of issues (log level)\n  - Edit the Chia config at ~/.chia/mainnet/config.\n  - In the farmer section, set log_level to INFO, for example:\n    farmer:\n      logging: &id001\n        log_filename: log/debug.log\n        log_level: INFO\n        log_stdout: false\n  - Save the file and restart if needed. If log_level was not INFO, change it to INFO to get more detail.\n\n- Check that your plots are passing the filter\n  - There are steps in the docs to verify plots are passing the filter; this is a useful sanity check to rule out plot-related issues.\n\n- Check GUI/CLI health\n  - GUI users can use the Farm and Harvest panels (2.0) to get an overview of farm health. Look at the Farm panel and Farm Health interpretation for clues.\n  - If you\u2019re using the CLI, review the farm health/status output as described above.\n\n- Consider pool farming\n  - Joining a pool can help provide partial rewards that confirm your farm is reachable and sized correctly, even if you\u2019re not currently winning solo rewards.\n\n- Look at normal vs. abnormal log information\n  - The docs show examples of normal INFO log lines (e.g., from full_node and farmer). If you see errors or unusual messages in the logs, that may indicate a problem needing investigation.\n\nIf you can share the exact symptoms or any error messages (e.g., the output of chia farm summary or any log lines from log/debug.log), I can help interpret them.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/checking-farm-health.md",
+          "score": 0.9967505931854248,
+          "snippet": "CLI Health\n\nCheck if your farm thinks it's farming\n\nBefore going further, please make sure whether your farm actually considers itself to be farming. There's a good chance that you might not since you"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/checking-farm-health.md",
+          "score": 0.9995390176773071,
+          "snippet": "title: Checking Farm Health slug: /reference-client/troubleshooting/checking-farm-health\n\n\"Is my farm working?\"\n\nIt's one of the most common questions farmers ask themselves. This is understandable --"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/farming-faq.md",
+          "score": 1.026418924331665,
+          "snippet": ":::info Another way to ensure your farm is operational is checking against a pool. Consistent payouts from regulary partials sent gives you peace of mind. This is opposed to solo farming where you may"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "checking-farm-health.md",
+          "score": 0.14927635398709008
+        },
+        {
+          "source": "plotting-compression.md",
+          "score": 0.091714262042554
+        },
+        {
+          "source": "farming-guide.md",
+          "score": 0.051053817178023264
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "query": "how does chia work",
+    "category": "hard",
+    "semantic": {
+      "answer": "Chia uses a Nakamoto-style consensus called Proof of Space and Time. Instead of energy-intensive mining, participants allocate unused disk space to create plots. The heavy, resource-intensive work is the initial plotting; once plotting is complete, your computer farms using those plots to participate in the network and earn chia rewards. Ongoing farming requires very little bandwidth and uses mostly storage. This design aims for a decentralized, lower-energy blockchain. Chialisp is Chia\u2019s smart transaction language, enabling features like advanced smart contracts.",
+      "results": [
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.8085265159606934,
+          "snippet": "What is Chia?\n\nChia was incorporated in August of 2017 to develop an improved blockchain and smart transaction platform. We are building the Chia Network to improve the global financial and payments s"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.8344215750694275,
+          "snippet": "Documentation can be found at Chialisp.com.\n\nWhy is Chia better?\n\nChia has a new innovative Nakamoto consensus algorithm, Proof of Space and Time, that removes the energy demands of Proof of Work from"
+        },
+        {
+          "source": "/Users/roy/Projects/chia-docs-semantic-search/docs/sample-data/faq.md",
+          "score": 0.8503199219703674,
+          "snippet": "Why do I want to farm Chia?\n\nYou can farm Chia on the unused storage of your laptop, desktop, or corporate network and, in return, you have the chance to receive rewards in chia for helping secure the"
+        }
+      ]
+    },
+    "keyword": {
+      "results": [
+        {
+          "source": "faq.md",
+          "score": 0.22632149611119393
+        },
+        {
+          "source": "installation.md",
+          "score": 0.16636672499969363
+        },
+        {
+          "source": "introduction.md",
+          "score": 0.1411943223082365
+        }
+      ]
+    }
+  }
+]

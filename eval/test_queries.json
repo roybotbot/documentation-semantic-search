@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "query": "how much space do I need",
+    "expected_sources": ["plotting-basics.md", "plotting-hardware.md", "farming-guide.md", "faq.md"],
+    "category": "terminology_gap",
+    "notes": "Users say 'space'. Multiple docs answer this: farming-guide gives specific numbers (400GB), faq covers plot sizes, plotting pages cover K32 details."
+  },
+  {
+    "id": 2,
+    "query": "will my SSD die from plotting",
+    "expected_sources": ["ssd-endurance.md"],
+    "category": "terminology_gap",
+    "notes": "Users say 'die'. Docs say 'endurance', 'TBW', 'terabytes written'."
+  },
+  {
+    "id": 3,
+    "query": "can I use a raspberry pi",
+    "expected_sources": ["installation.md", "plotting-hardware.md"],
+    "category": "terminology_gap",
+    "notes": "Users ask by device name. Docs describe 'minimum supported specs' and 'Raspberry Pi 4, 4GB model'."
+  },
+  {
+    "id": 4,
+    "query": "how do I get my money",
+    "expected_sources": ["farming-basics.md", "pool-farming.md"],
+    "category": "terminology_gap",
+    "notes": "Users say 'money'. Docs say 'block reward', 'XCH', 'rewards'."
+  },
+  {
+    "id": 5,
+    "query": "what's the lottery thing",
+    "expected_sources": ["farming-basics.md"],
+    "category": "terminology_gap",
+    "notes": "Users vaguely remember farming described as a lottery. Docs say 'estimated time to win', 'proof of space'."
+  },
+  {
+    "id": 6,
+    "query": "how do I back up my keys so I don't lose everything",
+    "expected_sources": ["key-management.md", "locating-keys.md"],
+    "category": "terminology_gap",
+    "notes": "Users say 'back up'. Docs say 'mnemonic', 'seed phrase', 'write down'."
+  },
+  {
+    "id": 7,
+    "query": "what's the difference between compressed and regular plots",
+    "expected_sources": ["plotting-compression.md", "plotting-basics.md", "farming-compressed-plots.md"],
+    "category": "terminology_gap",
+    "notes": "Users say 'regular'. Docs say 'uncompressed'. Docs also note all plots are technically compressed."
+  },
+  {
+    "id": 8,
+    "query": "how do I start farming chia",
+    "expected_sources": ["farming-guide.md", "farming-basics.md"],
+    "category": "natural_language",
+    "notes": "Broad getting-started question. Should land on the farming guide."
+  },
+  {
+    "id": 9,
+    "query": "how do I join a pool",
+    "expected_sources": ["pool-farming.md"],
+    "category": "natural_language",
+    "notes": "Direct question, clear mapping."
+  },
+  {
+    "id": 10,
+    "query": "how do I check if my farm is working",
+    "expected_sources": ["check-if-things-are-working.md", "checking-farm-health.md"],
+    "category": "natural_language",
+    "notes": "Two relevant troubleshooting pages."
+  },
+  {
+    "id": 11,
+    "query": "how do I move plots to another computer",
+    "expected_sources": ["moving-plots.md", "farming-many-machines.md"],
+    "category": "natural_language",
+    "notes": "Straightforward operational question."
+  },
+  {
+    "id": 12,
+    "query": "how do I install chia on linux",
+    "expected_sources": ["installation.md"],
+    "category": "natural_language",
+    "notes": "Platform-specific install question."
+  },
+  {
+    "id": 13,
+    "query": "what hardware should I buy for plotting",
+    "expected_sources": ["plotting-hardware.md"],
+    "category": "natural_language",
+    "notes": "Direct match to a specific page."
+  },
+  {
+    "id": 14,
+    "query": "how do I set up a cold wallet for chia",
+    "expected_sources": ["key-management.md"],
+    "category": "natural_language",
+    "notes": "Key management page covers the 2-key cold storage setup."
+  },
+  {
+    "id": 15,
+    "query": "how do I create my first plot",
+    "expected_sources": ["farming-guide.md", "plotting-how-to.md", "plotting-basics.md"],
+    "category": "natural_language",
+    "notes": "Common first-time question."
+  },
+  {
+    "id": 16,
+    "query": "what should I know before starting",
+    "expected_sources": [],
+    "category": "hard",
+    "notes": "Too broad. Could match half the docs. Interesting to see what the system surfaces."
+  },
+  {
+    "id": 17,
+    "query": "is it worth it",
+    "expected_sources": ["faq.md", "farming-basics.md", "plotting-hardware.md"],
+    "category": "hard",
+    "notes": "Vague, but plotting-hardware discusses cost/time tradeoffs directly. Faq and farming-basics cover economics."
+  },
+  {
+    "id": 18,
+    "query": "my node won't sync",
+    "expected_sources": ["node-syncing.md"],
+    "category": "hard",
+    "notes": "Short problem statement, not a question. Phrased as a complaint rather than a search query."
+  },
+  {
+    "id": 19,
+    "query": "something is wrong with my farm",
+    "expected_sources": ["checking-farm-health.md", "check-if-things-are-working.md", "farming-faq.md"],
+    "category": "hard",
+    "notes": "Vague symptom. Multiple troubleshooting pages could match. No single right answer."
+  },
+  {
+    "id": 20,
+    "query": "how does chia work",
+    "expected_sources": ["introduction.md", "architecture-overview.md", "farming-basics.md", "faq.md"],
+    "category": "hard",
+    "notes": "Broad conceptual question. Faq opens with 'What is Chia?' which directly answers this."
+  }
+]
