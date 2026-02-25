@@ -4,6 +4,7 @@ from pathlib import Path
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src import config
+from src.preprocessor import preprocess
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +16,7 @@ def load_documents(docs_path: str) -> list:
         docs_path: Path to directory containing documentation files.
 
     Returns:
-        List of loaded Document objects.
+        List of loaded Document objects with preprocessed content.
 
     Raises:
         ValueError: If path does not exist or is not a directory.
@@ -36,6 +37,9 @@ def load_documents(docs_path: str) -> list:
         docs = loader.load()
         logger.info("Loaded %d %s files", len(docs), ext)
         all_docs.extend(docs)
+
+    for doc in all_docs:
+        doc.page_content = preprocess(doc.page_content)
 
     logger.info("Total documents loaded: %d", len(all_docs))
     return all_docs
