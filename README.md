@@ -73,8 +73,8 @@ The preprocessor strips YAML frontmatter, MDX/JSX components, import statements,
 Requires Python 3.8-3.13 and an OpenAI API key.
 
 ```bash
-git clone https://github.com/roybotbot/chia-docs-semantic-search.git
-cd chia-docs-semantic-search
+git clone https://github.com/roybotbot/documentation-semantic-search.git
+cd documentation-semantic-search
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
