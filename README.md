@@ -1,51 +1,76 @@
-# Documentation Semantic Search
+# Documentation semantic search
 
-Turn any documentation repository into a natural language search system using retrieval-augmented generation (RAG).
+Semantic search over markdown documentation using RAG. Built from experience maintaining 200+ pages of developer docs at Chia Network.
 
-## Why
+## The problem
 
-Keyword search fails when users know what they want but not the terminology the docs use. This system converts documentation into vector embeddings and retrieves results by meaning, not string matching.
+While working on the Chia docs, I kept seeing the same thing: users searched the docs, found nothing, then asked in Discord. The answers were already there. The problem wasn't missing content — it was that users describe things in their own words and the docs use project-specific terminology. Someone searching "how much space do I need" won't find a page about "K32 plot files" and "108GB."
 
-Built from experience maintaining ~200 pages of developer documentation at Chia Network, where users regularly struggled to find answers that existed in the docs.
+I didn't build a solution for this while at Chia. This project is what I would have built.
 
-## How It Works
+## What's in here
+
+A RAG pipeline (load markdown, chunk, embed with OpenAI, store in ChromaDB, retrieve by similarity, answer with an LLM) and an evaluation framework that tests it against a keyword baseline.
+
+The evaluation is the interesting part.
+
+## Evaluation
+
+I wrote 20 test queries based on the kinds of questions users commonly asked, ran them against both semantic search and TF-IDF keyword search on the same 27-doc subset, and scored each result set manually.
+
+|                  | Semantic | Keyword |
+|------------------|----------|---------|
+| Terminology gap  | 5/7      | 6/7     |
+| Natural language | 7/8      | 7/8     |
+| Hard queries     | 5/5      | 2/5     |
+| Total            | 17/20    | 15/20   |
+
+Semantic search won, but not where I expected. On terminology gap and natural language queries, the two methods performed about the same. The gap came from hard queries — vague, underspecified questions like "is it worth it" and "how does chia work" where keyword search has almost nothing to match on. Semantic search got all five. Keyword search got two.
+
+Keyword search still won on queries where the user's words appear literally in the right document. "Cold wallet" is in the key-management page. "Raspberry pi" is in the installation page. TF-IDF finds those directly. Semantic search sometimes found the right document but surfaced the wrong chunk.
+
+The full analysis is in [evaluation results](docs/evaluation-results.md), and the reasoning behind each technical choice is in [design decisions](docs/design-decisions.md).
+
+## What I'd build next
+
+These come from specific failures in the evaluation.
+
+Document-level aggregation after chunk retrieval. Multiple failures happened because several chunks from the right document each scored moderately, but no single chunk scored highest. The pipeline doesn't know two chunks came from the same file.
+
+Query expansion for vocabulary mismatches. "How do I get my money" was the clearest failure — neither method connected "money" to "block rewards" or "XCH." Expanding queries into related terms before searching would likely fix this. Either an LLM generates the variants or a domain-specific synonym map handles it.
+
+Larger chunks. Several cases where semantic search found the right document but the 1000-character window landed on the wrong paragraph. 1500 or 2000 characters might fix that, though it could create different problems. I'd want to test it against the same evaluation set.
+
+## How it works
 
 ```
 Markdown files
     │
     ▼
-┌──────────┐    ┌──────────────┐    ┌─────────────┐
-│  Loader  │───▶│   Chunker    │───▶│  Embeddings │
-│ (md/mdx) │    │ (1000 char)  │    │  (OpenAI)   │
-└──────────┘    └──────────────┘    └──────┬──────┘
-                                           │
-                                           ▼
-                                    ┌─────────────┐
-                                    │  ChromaDB   │
-                                    │ (local)     │
-                                    └──────┬──────┘
-                                           │
-User query ──▶ Embed ──▶ Similarity Search─┘
-                                           │
-                                           ▼
-                                    ┌─────────────┐
-                                    │   LLM       │──▶ Answer + Sources
-                                    └─────────────┘
+┌──────────────┐    ┌──────────┐    ┌──────────────┐    ┌─────────────┐
+│ Preprocessor │───▶│  Loader  │───▶│   Chunker    │───▶│  Embeddings │
+│ (clean MDX)  │    │ (md/mdx) │    │ (1000 char)  │    │  (OpenAI)   │
+└──────────────┘    └──────────┘    └──────────────┘    └──────┬──────┘
+                                                               │
+                                                               ▼
+                                                        ┌─────────────┐
+                                                        │  ChromaDB   │
+                                                        │ (local)     │
+                                                        └──────┬──────┘
+                                                               │
+User query ──▶ Embed ──▶ Similarity Search ────────────────────┘
+                                                               │
+                                                               ▼
+                                                        ┌─────────────┐
+                                                        │   LLM       │──▶ Answer + Sources
+                                                        └─────────────┘
 ```
 
-## Design Decisions
-
-**Chunk size: 1000 characters, 200 overlap.** Small enough for precise retrieval, large enough to preserve context. The overlap prevents losing information at chunk boundaries — a sentence split across two chunks still appears in full in at least one.
-
-**Embedding model: `text-embedding-3-small`.** OpenAI's cheapest embedding model. For documentation search, the difference between this and larger models is marginal — the bottleneck is chunk quality, not embedding precision.
-
-**Local ChromaDB.** No external infrastructure needed. The full Chia docs (~200 files) index in under 5 minutes and the database is a few hundred MB. A hosted vector DB adds complexity without benefit at this scale.
-
-**LangChain for orchestration.** Handles document loading, text splitting, and the retrieval pipeline. Avoids reimplementing standard RAG plumbing.
+The preprocessor strips YAML frontmatter, MDX/JSX components, import statements, and Docusaurus admonition syntax before chunking. Without this, component tags and metadata pollute the embeddings.
 
 ## Setup
 
-Requires Python 3.8–3.13 and an OpenAI API key.
+Requires Python 3.8-3.13 and an OpenAI API key.
 
 ```bash
 git clone https://github.com/roybotbot/chia-docs-semantic-search.git
@@ -53,60 +78,35 @@ cd chia-docs-semantic-search
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-export OPENAI_API_KEY='your-key-here'
+cp .env.example .env
+# Add your OpenAI API key to .env
 ```
 
 ## Usage
 
-**Index documentation:**
+Index the sample data:
 ```bash
-python cli.py load /path/to/docs/directory
+python cli.py load docs/sample-data
 ```
 
-**Query:**
+Query:
 ```bash
 python cli.py query "What hardware do I need for farming?"
 ```
 
-## Example
-
-```
-$ python cli.py query "What hardware do I need?"
-
-Query: What hardware do I need?
-
-============================================================
-ANSWER
-============================================================
-The hardware you need depends on whether you're plotting or farming.
-
-For plotting: a fast CPU or GPU, temporary storage (SSD recommended),
-and enough RAM. For farming: almost any 64-bit computer made after 2010,
-including a Raspberry Pi 4 with 4+ GB RAM.
-
-============================================================
-SOURCES
-============================================================
-
-[1] docs/reference-client/plotting/plotting-hardware.md
-    If you do decide to buy hardware, this page will help you decide...
-
-[2] docs/reference-client/getting-started/farming-guide.md
-    Ready? Let's get started! Obtain hardware...
+Show retrieval scores and chunk details:
+```bash
+python cli.py query --explain "What hardware do I need for farming?"
 ```
 
-## What I'd Build Next
-
-- **Evaluation benchmarks** — measure retrieval accuracy against a test set of question/answer pairs to validate chunk size and embedding choices with data instead of intuition.
-- **Multi-format support** — extend beyond markdown to RST, HTML, and PDF so the tool works with any documentation source.
-- **Web interface** — a simple frontend where users paste a repo URL and get a searchable docs instance.
+Run the evaluation:
+```bash
+python eval/benchmark.py
+```
 
 ## Development
 
 ```bash
-# Run tests
 pytest tests/ -v
-
-# Run linter
-ruff check src/ tests/ cli.py
+ruff check src/ tests/ cli.py eval/
 ```
